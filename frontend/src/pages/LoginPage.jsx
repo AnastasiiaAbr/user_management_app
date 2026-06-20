@@ -12,6 +12,7 @@ function LoginPage() {
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (searchParams.get('verified')) {
@@ -26,7 +27,7 @@ function LoginPage() {
     e.preventDefault();
     try {
       const responce = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        `${API_URL}/api/auth/login`,
         {
           email,
           password

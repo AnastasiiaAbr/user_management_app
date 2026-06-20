@@ -10,6 +10,7 @@ function UsersPage() {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const navigate = useNavigate();
   const {message, messageType, showMessage} = useMessage();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchUsers();
@@ -27,7 +28,7 @@ function UsersPage() {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        'http://localhost:5000/api/users',
+        `${API_URL}/api/users`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -70,7 +71,7 @@ function UsersPage() {
       const token =
         localStorage.getItem('token');
       await axios.put(
-        'http://localhost:5000/api/users/block',
+        `${API_URL}/api/users/block`,
         {
           ids: selectedUsers
         },
@@ -93,7 +94,7 @@ function UsersPage() {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        'http://localhost:5000/api/users/unblock',
+        `${API_URL}/api/users/unblock`,
         {
           ids: selectedUsers
         },
@@ -115,7 +116,7 @@ function UsersPage() {
     try {
       const token = localStorage.getItem('token');
       await axios.delete(
-        'http://localhost:5000/api/users',
+        `${API_URL}/api/users`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -137,7 +138,7 @@ function UsersPage() {
     try {
       const token = localStorage.getItem('token');
       await axios.delete(
-        'http://localhost:5000/api/users/unverified',
+        `${API_URL}/api/users/unverified`,
         {
           headers: {
             Authorization: `Bearer ${token}`

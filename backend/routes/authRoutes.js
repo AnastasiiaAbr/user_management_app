@@ -28,7 +28,7 @@ router.post('/register', async (req, res) => {
       [id, name, email, hashPass, 'unverified', verificationToken]
     );
 
-    const verifyLink = `http://localhost:5000/api/auth/verify/${verificationToken}`;
+    const verifyLink = `${process.env.BACKEND_URL}/api/auth/verify/${verificationToken}`;
 
     transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -184,7 +184,7 @@ router.get(
       }
 
       res.redirect(
-        'http://localhost:5173/login?verified=true'
+        `${process.env.FRONTEND_URL}/login?verified=true`
       );
     } catch (error) {
       res.status(500).send(
