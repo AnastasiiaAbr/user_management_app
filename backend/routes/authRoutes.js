@@ -5,7 +5,6 @@ const crypto = require('crypto');
 
 const pool = require('../db/db');
 const getUIdValue = require('../utils/getUIdValue');
-const client = require('../utils/mailService');
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
@@ -29,31 +28,9 @@ router.post('/register', async (req, res) => {
 
     const verifyLink = `${process.env.BACKEND_URL}/api/auth/verify/${verificationToken}`;
 
-    await client.send({
-      from: {
-        email: "hello@demomailtrap.co",
-        name: "User Management System"
-      },
-      to: [
-        {
-          email: email
-        }
-      ],
-      subject: "Verify your account",
-      html: `
-    <h2>User Management System</h2>
-
-    <p>Thank you for registering.</p>
-
-    <a href="${verifyLink}">
-      Verify Account
-    </a>
-  `
-    });
-
     res.status(201).json({
-      message: 'User registered successfully'
-
+      message: 'User registered successfully',
+      verifyLink
     });
   } catch (error) {
 

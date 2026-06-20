@@ -8,6 +8,7 @@ function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [verifyLink, setVerifyLink] = useState('');
 
   const { message, messageType, showMessage } = useMessage();
   const API_URL = import.meta.env.VITE_API_URL;
@@ -16,7 +17,7 @@ function RegisterPage() {
     e.preventDefault();
 
     try {
-      await axios.post(
+      const response = await axios.post(
         `${API_URL}/api/auth/register`,
         {
           name,
@@ -24,6 +25,9 @@ function RegisterPage() {
           password
         }
       );
+
+      setVerifyLink(response.data.verifyLink);
+
       showMessage(
         'Registration successful. Please verify your account.',
         'success'
@@ -37,7 +41,7 @@ function RegisterPage() {
 
       console.log(error);
     }
-  }
+  };
   return (
     <div className="container-fluid p-0">
 
@@ -71,6 +75,17 @@ function RegisterPage() {
                 role="alert"
               >
                 {message}
+              </div>
+            )}
+
+            {verifyLink && (
+              <div className="text-center mb-3">
+                <a
+                  href={verifyLink}
+                  className="btn btn-success"
+                >
+                  Verify Account
+                </a>
               </div>
             )}
 
